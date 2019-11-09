@@ -22,5 +22,21 @@ router.get('/:id',(req, res) => {
         res.status(500).json({ errorMessage: "Error getting action."})
     })
 });
+//---------------------------------------------------------------------------------------
+
+router.post("/",(req,res) => {
+    const actionInfo = req.body
+        Actions.insert(actionInfo) 
+        .then(action => {
+            res.status(201).json(action)
+        })
+        .catch(err => {
+            res.status(500).json({error: "There was an error while saving the action to the database."})
+    }) 
+})
+
+//----------------------------------------------------------------
+
+
 
 module.exports = router
