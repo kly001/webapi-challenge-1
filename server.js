@@ -13,7 +13,8 @@ server.use("/projects/", projectsRouter)
 
 
 server.get('/', (req, res) => {
-  res.send(`<h1>Sprint Challenge: webapi-challenge</h1>`)
+  res.send(`<h1>Sprint Challenge: webapi-challenge</h1>
+  <h3>Let's get it on ! </h3>`)
 });
 
 //custom middleware
