@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require("morgan");
-// const userRouter = require("./users/userRouter.js")
+const actionsRouter = require("./routers/actionsRouter.js")
 // const postRouter = require("./posts/postRouter.js")
 const server = express();
 
@@ -8,12 +8,12 @@ const server = express();
 server.use(express.json());
 server.use(logger)
 server.use(morgan("dev"));
-// server.use("/api/users", userRouter)
+server.use("/actions/", actionsRouter)
 // server.use("/api/posts", postRouter)
 
 
 server.get('/', (req, res) => {
-  res.send(`<h2>Let's write some middleware!</h2>`)
+  res.send(`<h1>Sprint Challenge: webapi-challenge</h1>`)
 });
 
 //custom middleware
