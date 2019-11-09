@@ -2,7 +2,7 @@ const router = require("express").Router()
 const Projects = require("../data/helpers/projectModel.js")
 
 
-router.get("/", (req, res) => {
+router.get("/projects", (req, res) => {
     Projects.get()
     .then(projects => {
         res.status(200).json(projects)
