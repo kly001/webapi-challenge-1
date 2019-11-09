@@ -41,7 +41,7 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Describe a Resource?
 
-        A resource is any hardeare or software that is accessible by a computer, network, or another
+        A resource is any hardware or software that is accessible by a computer, network, or another
         object connected to the computer.
 
 //---------------------------------------------------------------------------------------------------

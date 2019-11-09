@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require("morgan");
 const actionsRouter = require("./routers/actionsRouter.js")
-// const postRouter = require("./posts/postRouter.js")
+const projectsRouter = require("./routers/projectsRouter.js")
 const server = express();
 
 
@@ -9,7 +9,7 @@ server.use(express.json());
 server.use(logger)
 server.use(morgan("dev"));
 server.use("/actions/", actionsRouter)
-// server.use("/api/posts", postRouter)
+server.use("/projects/", projectsRouter)
 
 
 server.get('/', (req, res) => {
