@@ -38,7 +38,7 @@ router.post("/",(req,res) => {
 
 //----------------------------------------------------------------
 
-router.delete("/:id",(req,res) => {
+router.delete("/:id",validateProjectId,(req,res) => {
     const {id} = req.params
     Projects.remove(id) 
     .then(delProject => {
@@ -54,7 +54,7 @@ router.delete("/:id",(req,res) => {
 })
 //----------------------------------------------------------------
 
-router.put("/:id",(req, res) => {
+router.put("/:id",validateProjectId,(req, res) => {
     const {id} = req.params
     const changes = req.body
    Projects.update(id,changes)
@@ -65,5 +65,37 @@ router.put("/:id",(req, res) => {
         res.status(500).json({errorMessage:"Unable to update project."})
     })
 });
+//---------------------------------------------------------------
+
+router.get("/:id/actions",validateProjectId, (req,res) => {
+    const {id} = req.params
+   Projects.get(id) 
+    .then(project => {
+        res.status(200).json(project) 
+    })
+    .catch(err => {
+        res.status(500).json({err:"Could not get actions for the project."})
+    })
+})
+//-----------------------------------------------------------------------------
+
+//Middleware
+
+function validateProjectId(req, res, next) {
+    const {id} = req.params
+    Projects.get(id)
+    .then(project => {
+        if(!project) {
+            res.status(400).json({message:`The project with ID# ${id} does not exist.`})
+        } else {
+            req.project = project;
+            next();
+        }
+    })
+        .catch(err => {
+            res.status(500).json({message: "Project could not be retrieved."})
+    })
+};
+
 
 module.exports = router

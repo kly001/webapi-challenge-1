@@ -1,4 +1,5 @@
 const router = require("express").Router()
+const actions = require("../data/helpers/actionModel.js")
 const Actions = require("../data/helpers/actionModel.js")
 
 router.get("/", (req, res) => {
@@ -12,7 +13,7 @@ router.get("/", (req, res) => {
 });
 //------------------------------------------------------------------
 
-router.get('/:id',(req, res) => {
+router.get('/:id',validateActionId,(req, res) => {
     const {id} = req.params
     Actions.get(id)
     .then(action => {
@@ -37,7 +38,7 @@ router.post("/",(req,res) => {
 
 //----------------------------------------------------------------
 
-router.delete("/:id",(req,res) => {
+router.delete("/:id",validateActionId,(req,res) => {
     const {id} = req.params
     Actions.remove(id) 
     .then(delAction => {
@@ -53,7 +54,7 @@ router.delete("/:id",(req,res) => {
 })
 //----------------------------------------------------------------
 
-router.put("/:id",(req, res) => {
+router.put("/:id",validateActionId,(req, res) => {
     const {id} = req.params
     const changes = req.body
    Actions.update(id,changes)
@@ -64,6 +65,22 @@ router.put("/:id",(req, res) => {
         res.status(500).json({errorMessage:"Unable to update action."})
     })
 });
+//------------------------------------------------------------------
 
+function validateActionId(req, res, next) {
+    const {id} = req.params
+    Actions.get(id)
+    .then(action => {
+        if(!action) {
+            res.status(400).json({message:`The action with ID# ${id} does not exist.`})
+        } else {
+            req.action = action;
+            next();
+        }
+    })
+        .catch(err => {
+            res.status(500).json({message: "action could not be retrieved."})
+    })
+};
 
 module.exports = router
